@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import { CreateCategoryService } from './CreateCategoryservice';
 
 export class CreateCategoryController {
-  constructor(private createCategoriesUseCase: CreateCategoryService) {}
-
-  handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { name, description } = request.body;
+    const createCategoriesUseCase = container.resolve(CreateCategoryService);
 
-    this.createCategoriesUseCase.execute({ name, description });
+    await createCategoriesUseCase.execute({ name, description });
 
     return response.status(201).send({ message: 'Dados criados com sucesso' });
   }
