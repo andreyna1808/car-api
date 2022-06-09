@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "RentalX Documentation",
+    "title": "RentX Documentation",
     "description": "This is an API Rent",
     "version": "1.0.0",
     "contact": {
@@ -64,6 +64,66 @@
           }
         }
       }
+    },
+    "/categories/import": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Upload a new category",
+        "description": "Upload a new category",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created"
+        }
+      }
+    },
+    "/specifications": {
+      "post": {
+          "tags": ["Specifications"],
+          "summary": "Create new specification",
+          "description": "Route for created specification",
+          "requestBody": {
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "type": "object",
+                          "example": {
+                              "name": "Audi R8V10 Andreyna",
+                              "description": "essa é minha"
+                          }
+                      }
+                  }
+              }
+          },
+          "responses": {
+              "201": { "description": "Specifications created successfully" },
+              "400": { "description": "incorrect request" },
+              "401": { "description": "Specifications already exists" }
+          }
+      },
+      "get": {
+        "tags": ["Specifications"],
+        "summary": "All specifications",
+        "description": "Route for list specifications",
+        "responses": {
+            "200": { "description": "All specifications" }
+        }
+      }        
     }
   }
 }
