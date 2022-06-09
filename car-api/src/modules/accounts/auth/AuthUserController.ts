@@ -2,6 +2,8 @@ import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
+import { Errors } from '../../../errors/Errors';
+import { SECRET_KEY } from '../../../utils/secretKey';
 import { IUserRepository } from '../repositories/IUsersRepository';
 
 interface IRequest {
@@ -28,10 +30,10 @@ export class AuthUserCase {
     const passwordMatch = await compare(password, user.password);
 
     if (!user || !passwordMatch) {
-      throw new Error('Email or password incorrect!');
+      throw new Errors('Email or password incorrect!');
     }
 
-    const token = sign({}, 'R629ef6bd29c0f', {
+    const token = sign({}, SECRET_KEY, {
       subject: user.id,
       expiresIn: '1d',
     });
